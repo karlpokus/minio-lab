@@ -10,8 +10,9 @@ export MINIO_SECRET_KEY=...
 
 server
 ```bash
-$ docker run --rm -p 9000:9000 -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
--e MINIO_SECRET_KEY=$MINIO_SECRET_KEY --name minio minio/minio server /data
+$ docker run -p 9000:9000 -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
+-e MINIO_SECRET_KEY=$MINIO_SECRET_KEY -v `pwd`/data:/data \
+--name minio minio/minio server /data
 ```
 
 client
@@ -47,6 +48,7 @@ $ docker run --rm -p 9000:9000 -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
 - [ ] multi-tenancy
 - [ ] store from stream
 - [ ] don't run as root
+- [x] persistent storage
 
 # license
 MIT

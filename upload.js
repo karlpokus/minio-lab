@@ -2,6 +2,7 @@
 	creates a minio client and a bucket named test and uploads an image to it
 */
 
+const { BUCKET = 'test', FILEPATH, FILENAME } = process.env;
 const client = require('./lib/client');
 
 const listBuckets = async () => {
@@ -11,10 +12,10 @@ const listBuckets = async () => {
 
 (async () => {
 	try {
-		const bucket = 'test';
+		const bucket = BUCKET;
 		const region = 'uppsala';
-		const fpath = 'imgs/dawkins.jpg';
-		const fname = 'dawkins';
+		const fpath = FILEPATH;
+		const fname = FILENAME;
 		const meta = {
 			'Content-Type': 'application/octet-stream',
 			'Badass-level': 1000

@@ -8,25 +8,16 @@ export MINIO_ACCESS_KEY=...
 export MINIO_SECRET_KEY=...
 ```
 
-server
+### server
+
+http
 ```bash
 $ docker run --rm -p 9000:9000 -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
 -e MINIO_SECRET_KEY=$MINIO_SECRET_KEY -v `pwd`/data:/data \
 -u `id -u` --name minio minio/minio server /data
 ```
 
-client
-- HOST - defaults to localhost
-- BUCKET - defaults to test
-- FILEPATH
-- FILENAME
-- SSL bool - optional
-
-```bash
-$ node upload.js
-```
-
-tls
+https
 ```bash
 # generate certs. requires go 1.13
 $ go run cert.go -ca --host <host>
@@ -38,6 +29,19 @@ $ docker run --rm -p 9000:9000 -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
 -e MINIO_SECRET_KEY=$MINIO_SECRET_KEY -u `id -u` -v `pwd`/certs:/.minio/certs:ro \
 -v `pwd`/data:/data --name minio minio/minio server /data
 ```
+
+### client
+- HOST - defaults to localhost
+- BUCKET - defaults to test
+- FILEPATH
+- FILENAME
+- SSL bool - optional
+
+```bash
+$ node upload.js
+```
+
+Or use the [mc client](https://docs.min.io/docs/minio-client-complete-guide.html) to manage objects. Use `--insecure` to bypass self-signed cert errors or copy `certs/public.crt` to `.mc/certs/CAs`.
 
 # todos
 - [x] server and client

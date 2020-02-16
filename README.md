@@ -32,10 +32,11 @@ $ docker run --rm -p 9000:9000 -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
 
 ### client
 - HOST - defaults to localhost
+- PORT - defaults to 9000
 - BUCKET - defaults to test
+- SSL - defaults to false
 - FILEPATH
 - FILENAME
-- SSL bool - optional
 
 ```bash
 $ node upload.js
@@ -43,13 +44,30 @@ $ node upload.js
 
 Or use the [mc client](https://docs.min.io/docs/minio-client-complete-guide.html) to manage objects. Use `--insecure` to bypass self-signed cert errors or copy `certs/public.crt` to `.mc/certs/CAs`.
 
+### distributed mode - single tenant
+
+```bash
+# run 4 nodes w 4 disks
+$ docker-compose up
+```
+
+disaster recovery test
+- stop node 4
+- upload object to node 1
+- expect object to be written to node 3 - PASS
+- expect all living nodes to log connection errors - PASS
+- restart node 4
+- expect object to be written to node 4 - PASS
+- expect connection errors to stop - PASS
+
 # todos
 - [x] server and client
 - [x] tls
 - [ ] [compression](https://docs.min.io/docs/minio-compression-guide.html)
 - [ ] upload base64 src
-- [ ] distributed setup
-- [ ] multi-tenancy
+- [x] distributed setup
+- [ ] multi-tenancy (+load balancer)
+- [ ] try sharing disks between nodes
 - [ ] store from stream
 - [x] don't run as root
 - [x] persistent storage

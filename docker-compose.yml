@@ -1,0 +1,28 @@
+version: '3'
+services:
+  minio1:
+    image: 'minio/minio'
+    ports:
+      - '9000:9000'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio{1...4}/data{1...4}
+  minio2:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio{1...4}/data{1...4}
+  minio3:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio{1...4}/data{1...4}
+  minio4:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio{1...4}/data{1...4}

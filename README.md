@@ -64,7 +64,7 @@ disaster recovery test
 - [x] server and client
 - [x] tls
 - [ ] [compression](https://docs.min.io/docs/minio-compression-guide.html)
-- [ ] upload base64 src
+- [x] upload base64 src
 - [x] distributed setup
 - [ ] multi-tenancy (+load balancer)
 - [ ] try sharing disks between nodes

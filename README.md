@@ -47,8 +47,8 @@ Or use the [mc client](https://docs.min.io/docs/minio-client-complete-guide.html
 ### distributed mode - single tenant
 
 ```bash
-# run 4 nodes w 4 disks
-$ docker-compose up
+# run 4 nodes w 4 disks per node
+$ docker-compose -f docker/distr-mode-single-tenant.yml up
 ```
 
 disaster recovery test
@@ -60,17 +60,30 @@ disaster recovery test
 - expect object to be written to node 4 - PASS
 - expect connection errors to stop - PASS
 
+### distributed mode - multi-tenant
+
+```bash
+# 4 nodes per tenant w 1 disk per node
+# ephemeral storage
+# both tenants share keys
+# no nodes exposed to host
+# proxy to tenant1 on port 9051
+# proxy to tenant2 on port 9052
+$ docker-compose -f docker/distr-mode-multi-tenant.yml up
+```
+
 # todos
 - [x] server and client
 - [x] tls
 - [ ] [compression](https://docs.min.io/docs/minio-compression-guide.html)
 - [x] upload base64 src
 - [x] distributed setup
-- [ ] multi-tenancy (+load balancer)
-- [ ] try sharing disks between nodes
+- [x] multi-tenancy (+load balancer)
+- [x] try sharing disks between nodes
 - [ ] store from stream
 - [x] don't run as root
 - [x] persistent storage
+- [ ] concurrent io fetching objects
 
 # license
 MIT

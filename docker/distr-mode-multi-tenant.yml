@@ -1,0 +1,57 @@
+version: '3'
+services:
+  minio-tenant1-1:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio-tenant1-1/data/tenant1 http://minio-tenant1-2/data/tenant1 http://minio-tenant1-3/data/tenant1 http://minio-tenant1-4/data/tenant1
+  minio-tenant1-2:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio-tenant1-1/data/tenant1 http://minio-tenant1-2/data/tenant1 http://minio-tenant1-3/data/tenant1 http://minio-tenant1-4/data/tenant1
+  minio-tenant1-3:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio-tenant1-1/data/tenant1 http://minio-tenant1-2/data/tenant1 http://minio-tenant1-3/data/tenant1 http://minio-tenant1-4/data/tenant1
+  minio-tenant1-4:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio-tenant1-1/data/tenant1 http://minio-tenant1-2/data/tenant1 http://minio-tenant1-3/data/tenant1 http://minio-tenant1-4/data/tenant1
+  minio-tenant2-1:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio-tenant2-1/data/tenant2 http://minio-tenant2-2/data/tenant2 http://minio-tenant2-3/data/tenant2 http://minio-tenant2-4/data/tenant2
+  minio-tenant2-2:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio-tenant2-1/data/tenant2 http://minio-tenant2-2/data/tenant2 http://minio-tenant2-3/data/tenant2 http://minio-tenant2-4/data/tenant2
+  minio-tenant2-3:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio-tenant2-1/data/tenant2 http://minio-tenant2-2/data/tenant2 http://minio-tenant2-3/data/tenant2 http://minio-tenant2-4/data/tenant2
+  minio-tenant2-4:
+    image: 'minio/minio'
+    environment:
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+    command: server --address :9000 http://minio-tenant2-1/data/tenant2 http://minio-tenant2-2/data/tenant2 http://minio-tenant2-3/data/tenant2 http://minio-tenant2-4/data/tenant2
+  proxy:
+    image: nginx
+    ports:
+      - 9051:9051
+      - 9052:9052
+    volumes:
+      - ../conf/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro

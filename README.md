@@ -72,6 +72,8 @@ disaster recovery test
 $ docker-compose -f docker/distr-mode-multi-tenant.yml up
 ```
 
+note: a nicely added benefit of using the proxy is the accesslog contains the REST api end points :)
+
 # todos
 - [x] server and client
 - [x] tls

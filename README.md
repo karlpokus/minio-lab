@@ -74,6 +74,17 @@ $ docker-compose -f docker/distr-mode-multi-tenant.yml up
 
 note: a nicely added benefit of using the proxy is the accesslog contains the REST api end points :)
 
+### cluster and load balancer
+
+```bash
+$ docker-compose -f docker/distr-mode-lb.yml up
+# lb prometheus endpoint https://github.com/minio/sidekick/blob/master/metrics.md
+$ curl localhost:8080/.prometheus/metrics
+# lb terminal gui
+$ docker exec -it <container> "/sidekick" -a :8989 --health-path=/minio/health/ready http://minio{1...4}:9000
+# note: status works but not calls as they do not pass this listening port
+```
+
 # todos
 - [x] server and client
 - [x] tls
@@ -86,6 +97,10 @@ note: a nicely added benefit of using the proxy is the accesslog contains the RE
 - [x] don't run as root
 - [x] persistent storage
 - [ ] concurrent io fetching objects
+- [ ] add/remove nodes
+- [ ] try traefik as lb https://docs.min.io/docs/how-to-run-multiple-minio-servers-with-traef-k.html
+- [x] try sidekick as lb
+- [ ] sidekick cache https://github.com/minio/sidekick#high-performance-s3-cache
 
 # license
 MIT

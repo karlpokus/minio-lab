@@ -4,7 +4,7 @@
   "description": "Fiddling with the minio server and client",
   "main": "index.js",
   "dependencies": {
-    "minio": "^7.0.13"
+    "minio": "^7.0.16"
   },
   "devDependencies": {},
   "scripts": {

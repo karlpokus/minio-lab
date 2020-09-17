@@ -75,6 +75,7 @@ $ docker-compose -f docker/distr-mode-multi-tenant.yml up
 note: a nicely added benefit of using the proxy is the accesslog contains the REST api end points :)
 
 ### cluster and load balancer
+note: We're running the lb (sidekick) as a stand-alone container here, which makes it a bottleneck. The recommended way is a pod sidecar.
 
 ```bash
 $ docker-compose -f docker/distr-mode-lb.yml up

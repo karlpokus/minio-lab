@@ -13,7 +13,7 @@ export MINIO_SECRET_KEY=...
 http
 ```bash
 $ docker run --rm -p 9000:9000 -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
--e MINIO_SECRET_KEY=$MINIO_SECRET_KEY -v `pwd`/data:/data \
+-e MINIO_SECRET_KEY=$MINIO_SECRET_KEY -v `pwd`/data/tmp:/data \
 -u `id -u` --name minio minio/minio server /data
 ```
 
@@ -27,7 +27,7 @@ $ mv -iv key.pem certs/private.key
 # run as current user w ssl
 $ docker run --rm -p 9000:9000 -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
 -e MINIO_SECRET_KEY=$MINIO_SECRET_KEY -u `id -u` -v `pwd`/certs:/.minio/certs:ro \
--v `pwd`/data:/data --name minio minio/minio server /data
+-v `pwd`/data/tmp:/data --name minio minio/minio server /data
 ```
 
 ### client

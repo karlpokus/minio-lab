@@ -86,6 +86,20 @@ $ docker exec -it <container> "/sidekick" -a :8989 --health-path=/minio/health/r
 # note: status works but not calls as they do not pass this listening port
 ```
 
+### cluster, load balancer and multi-zone
+Server 1 and 2 is zone A, server 3 and 4 is zone B. This time we're running sidekick outside docker-compose to be able to access the terminal gui properly.
+
+```bash
+$ docker-compose -f docker/distr-mode-lb-multi-zone.yml up
+# 75% of objects end up in zone A, 25% in zone B
+```
+
+```bash
+$ docker run --rm -it -p 8080:8080 --network docker_default -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
+-e MINIO_SECRET_KEY=$MINIO_SECRET_KEY --name lb minio/sidekick:v0.5.1 \
+--health-path=/minio/health/ready http://minio{1...2}:9000,http://minio{3...4}:9000
+```
+
 # todos
 - [x] server and client
 - [x] tls
@@ -101,6 +115,7 @@ $ docker exec -it <container> "/sidekick" -a :8989 --health-path=/minio/health/r
 - [ ] add/remove nodes
 - [ ] try traefik as lb https://docs.min.io/docs/how-to-run-multiple-minio-servers-with-traef-k.html
 - [x] try sidekick as lb
+- [x] multi-zone
 - [ ] sidekick cache https://github.com/minio/sidekick#high-performance-s3-cache
 
 # license

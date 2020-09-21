@@ -91,13 +91,13 @@ Server 1 and 2 is zone A, server 3 and 4 is zone B. This time we're running side
 
 ```bash
 $ docker-compose -f docker/distr-mode-lb-multi-zone.yml up
-# 75% of objects end up in zone A, 25% in zone B
 ```
 
 ```bash
+# use space char to declare multiple sites and comma for the same site
 $ docker run --rm -it -p 8080:8080 --network docker_default -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
 -e MINIO_SECRET_KEY=$MINIO_SECRET_KEY --name lb minio/sidekick:v0.5.1 \
---health-path=/minio/health/ready http://minio{1...2}:9000,http://minio{3...4}:9000
+--health-path=/minio/health/ready http://minio{1...2}:9000 http://minio{3...4}:9000
 ```
 
 # todos

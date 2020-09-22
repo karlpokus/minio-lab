@@ -100,6 +100,21 @@ $ docker run --rm -it -p 8080:8080 --network docker_default -e MINIO_ACCESS_KEY
 --health-path=/minio/health/ready http://minio{1...2}:9000 http://minio{3...4}:9000
 ```
 
+### single server on tls and lb
+
+```bash
+# server
+$ docker run --rm -p 9000:9000 --network docker_default -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
+-e MINIO_SECRET_KEY=$MINIO_SECRET_KEY -u `id -u` -v `pwd`/certs/localhost:/.minio/certs:ro \
+-v `pwd`/data/tmp:/data --name minio minio/minio server /data
+# lb with insecure flag set
+$ docker run --rm -it -p 8080:8080 --network docker_default -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
+-e MINIO_SECRET_KEY=$MINIO_SECRET_KEY --name lb minio/sidekick:v0.5.1 \
+--health-path=/minio/health/ready --insecure https://minio:9000
+```
+
+note: We must add the insecure flag to lb for self-signed certs. No need to add the flag to mc. It's ok to use the insecure flag even if minio is not running on tls.
+
 # todos
 - [x] server and client
 - [x] tls

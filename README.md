@@ -27,7 +27,7 @@ $ mv -iv key.pem certs/private.key
 # run as current user w ssl
 $ docker run --rm -p 9000:9000 -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY \
 -e MINIO_SECRET_KEY=$MINIO_SECRET_KEY -u `id -u` -v `pwd`/certs/localhost:/.minio/certs:ro \
--v `pwd`/data/tmp:/data --name minio minio/minio server /data
+-v `pwd`/data/tmp:/data --name minio minio/minio:RELEASE.2020-09-23T19-18-30Z server /data
 ```
 
 ### client
@@ -115,6 +115,14 @@ $ docker run --rm -it -p 8080:8080 --network docker_default -e MINIO_ACCESS_KEY=
 
 note: We must add the insecure flag to lb for self-signed certs. No need to add the flag to mc. It's ok to use the insecure flag even if minio is not running on tls.
 
+### cluster and tls
+
+distributed mode + multiple drives requires O_DIRECT which is not supported on mac os. So we're using FS mode (single drive) here. Remember to create certs for all servers (described above) and also copy each servers public.crt into certs/CAs on all other servers. I also copied the certs dir to /tmp to make it work with vagrant, but that is not necessary.
+
+```bash
+$ docker-compose -f docker/distr-mode-tls.yml up
+```
+
 # todos
 - [x] server and client
 - [x] tls
@@ -131,6 +139,7 @@ note: We must add the insecure flag to lb for self-signed certs. No need to add 
 - [ ] try traefik as lb https://docs.min.io/docs/how-to-run-multiple-minio-servers-with-traef-k.html
 - [x] try sidekick as lb
 - [x] multi-zone
+- [x] cluster on tls
 - [ ] sidekick cache https://github.com/minio/sidekick#high-performance-s3-cache
 
 # license
